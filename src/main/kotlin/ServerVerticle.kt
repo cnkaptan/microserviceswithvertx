@@ -1,4 +1,6 @@
+import com.sun.management.jmx.Trace.send
 import io.netty.util.internal.SocketUtils.accept
+import io.vertx.core.json.JsonArray
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.Router.router
 import io.vertx.ext.web.handler.BodyHandler
@@ -15,28 +17,33 @@ class ServerVerticle: CoroutineVerticle() {
 
     private fun router(): Router {
         val router = Router.router(vertx)
-        // Our router code comes here now
-        router.route().handler(BodyHandler.create())
 
+        router.route("/*").handler(BodyHandler.create())
         router.get("/alive").asyncHandler {
             // Some response comes here
             // We now can use any suspending function in this context
             val json = json {
-                obj("alive" to true)
+                obj (
+                        "alive" to true
+                )
             }
             it.respond(json.toString())
         }
 
-        router.post("/api/v1/cats").asyncHandler { ctx->
+        router.mountSubRouter("/api/v1", apiRouter())
+
+        return router
+    }
+
+    private fun apiRouter(): Router{
+        val router = Router.router(vertx)
+        router.post("/cats").asyncHandler { ctx ->
             // Some code of adding a cat comes here
         }
-
-        router.get("/api/v1/cats").asyncHandler { ctx->
-            // Code for getting all the cats
+        router.get("/cats").asyncHandler { ctx ->
         }
-
-        router.get("/api/v1/cats/:id").asyncHandler { ctx->
-            // Fetch specific cat
+        router.get("/cats/:id").asyncHandler { ctx ->
+            // Fetches specific cat
         }
         return router
     }
