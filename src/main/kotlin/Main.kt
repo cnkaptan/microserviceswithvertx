@@ -17,38 +17,7 @@ import kotlinx.coroutines.experimental.launch
 
 fun main(args: Array<String>) {
     val vertx = Vertx.vertx()
-
-    // Router lets you specify handlers for different HTTP methods and URLs.
-    val router = Router.router(vertx)
-    /**
-     * This will tell Vert.x to parse the request body into JSON for any request.
-     */
-    router.route().handler(BodyHandler.create())
-
-    router.get("/alive").asyncHandler {
-        // Some response comes here
-        // We now can use any suspending function in this context
-       val json = json {
-            obj("alive" to true)
-        }
-        it.respond(json.toString())
-    }
-
-    router.post("/api/v1/cats").asyncHandler { ctx->
-        // Some code of adding a cat comes here
-    }
-
-    router.get("/api/v1/cats").asyncHandler { ctx->
-        // Code for getting all the cats
-    }
-
-    router.get("/api/v1/cats/:id").asyncHandler { ctx->
-        // Fetch specific cat
-    }
-
-    vertx.createHttpServer()
-            .requestHandler(router::accept).listen(8080)
-
+    vertx.deployVerticle(ServerVerticle())
 }
 
 // But, by default, it doesn't support coroutines. Let's fix that by creating an extension function:
