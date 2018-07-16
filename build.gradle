@@ -21,6 +21,10 @@ dependencies {
     compile group: 'io.vertx', name: 'vertx-lang-kotlin-coroutines', version: $vertx_version
     compile group: 'io.vertx', name: 'vertx-web-client', version: $vertx_version
 
+    // Database
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
+    compile group: 'io.vertx', name: 'vertx-jdbc-client', version: $vertx_version
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.testng', name: 'testng', version: '6.11'
 }
