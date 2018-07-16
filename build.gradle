@@ -14,12 +14,15 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     def $vertx_version = '3.5.1'
     compile group: 'io.vertx', name: 'vertx-core', version: $vertx_version
     compile group: 'io.vertx', name: 'vertx-web', version: $vertx_version
     compile group: 'io.vertx', name: 'vertx-lang-kotlin', version: $vertx_version
     compile group: 'io.vertx', name: 'vertx-lang-kotlin-coroutines', version: $vertx_version
+    compile group: 'io.vertx', name: 'vertx-web-client', version: $vertx_version
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.testng', name: 'testng', version: '6.11'
 }
 
 compileKotlin {
