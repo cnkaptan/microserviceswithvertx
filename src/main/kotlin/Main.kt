@@ -23,6 +23,7 @@ import kotlinx.coroutines.experimental.launch
 fun main(args: Array<String>) {
     val vertx = Vertx.vertx()
     vertx.deployVerticle(ServerVerticle())
+    vertx.deployVerticle(CatVerticle())
 }
 
 // But, by default, it doesn't support coroutines. Let's fix that by creating an extension function:

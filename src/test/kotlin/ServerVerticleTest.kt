@@ -7,6 +7,7 @@ import io.vertx.ext.web.client.WebClient
 import kotlinx.coroutines.experimental.CompletableDeferred
 import kotlinx.coroutines.experimental.runBlocking
 import org.testng.Assert.assertEquals
+import org.testng.Assert.assertTrue
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
@@ -34,6 +35,16 @@ class ServerVerticleTest {
 
         val body = response.asJson()
         assertEquals(body["alive"].booleanValue(), true)
+    }
+
+    @Test
+    fun `Make sure that all cats are returned`() {
+        val response = get("/api/v1/cats")
+        assertEquals(response.statusCode(), 200)
+
+        val body = response.asJson()
+
+        assertTrue(body.size() > 0)
     }
 
     private fun startServer() {
